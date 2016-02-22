@@ -1,0 +1,51 @@
+body {
+		font-family: 'Open Sans', sans-serif;
+}
+
+hr {
+		border: 0;
+		height: 1px;
+		background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+		background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+		background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+		background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
+
+td {
+		width: 60%;
+		padding-left:10px;
+}
+
+h1 {
+	padding-left: 5%;
+}
+
+h2 {
+	text-align:right;
+	padding-right:5%;
+}
+
+h3 {
+	text-align:center;
+}
+
+h4 {
+	margin-left: 20%;
+	margin-right: 10%;
+}
+
+p {
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+.well {
+	background-color:rgb(200,200,200);
+	border-radius: 5px;
+	margin-left:0%;
+}
+
+form {
+	padding-left: 10%;
+	text-align: center;
+}

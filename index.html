@@ -1,0 +1,187 @@
+<html>
+    <header>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+				<link href='svc.css' rel='stylesheet' type='text/css'>
+        <SCRIPT src="svc.js"></SCRIPT>
+    </header>
+    <body>
+        <h1> SV changes tools </h1>
+        <h2 style=""> by Agka </h2>
+        <hr />
+        <h3 style=> <strong> Calculate Nx-looking speed changes. </strong></h3>
+
+        <h4> Description: </h4>
+        <p> The use of this tool is to; given a first SV change that lasts for a fraction (duration) of the intended section, gives you the second SV change to place after that fraction has passed to make that section look as 1x.</p>
+        <br />
+        <form style="padding-left: 20%">
+            <table>
+                <tr>
+                    <td>Duration (Between 0 and 1) of first SV change: </td> <td><input type="text" id="dur"></td>
+                </tr>
+
+                <tr>
+                    <td>First SV Change: </td> <td><input type="text" id="isvc"></td>
+                </tr>
+
+                <tr>
+                    <td>Destination rate (Leave as-is if unsure):</td> <td> <input type="text" id="ir" value="1"> <td>
+                </tr>
+
+            </table>
+
+            <input type="button" value="Calculate" onClick="sv_rateappearance()"> <br/> <br/>
+        </form>
+
+
+        <center>
+            <table class="well">
+                <tr>
+                    <td>Second SV Change: </td> <td><div id="out" style="text-align:right;margin-right: 10px">Unset</div></td>
+                </tr>
+            </table>
+        </center>
+
+        <br />
+        <hr />
+        <br />
+        <center><h3> Normalize BPM changes to 1x at BPM </h3></center>
+
+        <h4> Description: </h4>
+        <p>
+					This tool serves two functions.
+					First, you can remove the SV changes from the
+					pasted timing points of your .osu file.
+					Second, you can get SV changes such that the
+					speed of the map will look as if it had the selected BPM.
+					Do note, that the calculations for normalizing speed
+					will ignore already existing SV changes.
+				</p>
+
+        <center>
+            <table>
+                <tr>
+                    <td> BPM to normalize to: </td>
+                    <td> <input type="text" id="bpmnorm" value="120"></td>
+                </tr>
+            </table>
+        </center>
+
+        <form id="normbp">
+            <center>
+                <table>
+                    <tr>
+                        <td>Add original BPM changes along with normalization SVs</td>
+                        <td><input id="cb_dobpmout" type="checkbox" name="dobpmout" value=""></td>
+                    </tr>
+                </table>
+            <p> Place the contents between [TimingPoints] and [HitObjects] here. </p>
+            <textarea id="tabp" rows="10" cols="80" form="normbp"></textarea>
+            <p> Results will be contained here. Paste these into [TimingPoints]. </p>
+            <textarea id="tabpout" rows="10" cols="80" form="normbp" ></textarea> <br />
+
+            <input type="button" value="Calculate" onClick="sv_normalize_bpm()">
+            <input type="button" value="Remove SV Changes" onClick="sv_remove()">
+						</center>
+        </form>
+
+        <br/>
+        <hr />
+
+        <h3>
+					<strong>Create flowing speedups and slowdowns</strong>
+				</h3>
+
+
+        <h4> Description: </h4>
+
+        <p>
+					This tool is for creating speedups
+					and slowdowns that go from Ax to Bx
+					in N steps from time T0 to T1.
+					If quadratic is enabled, a form of easing will be applied.
+				</p>
+        <form>
+            <center>
+                <table>
+                    <tr><td> Start Time (ms): </td> <td><input type="text" id="tx_starttime"> </td></tr>
+                    <tr><td> <a href="https://www.youtube.com/watch?v=9-bLRFOTVQM">End Time (ms):</a> </td> <td><input type="text" id="tx_endtime"> </td></tr>
+                    <tr><td> Steps: </td> <td><input type="text" id="tx_steps"> </td></tr>
+                    <tr><td> Initial SV: </td> <td><input type="text" id="tx_startsv"> </td></tr>
+                    <tr><td> Final SV: </td> <td><input type="text" id="tx_endsv"> </td></tr>
+                    <tr><td> Quadratic interpolation: </td> <td><input type="checkbox" id="cb_quadratic"> </td></tr>
+                </table>
+                Results <br/><textarea id="ta_speedupsout" rows="10" cols="80"></textarea> <br/>
+                <input type="button" value="Calculate" onClick="sv_speedflow()"> <br />
+            </center>
+        </form>
+
+        <br/>
+        <hr/>
+
+        <h3> <strong>Add Time to Timing Points</strong> </h3>
+
+        <h4> Description: </h4>
+
+        <p> This tool is for making the timing points you give it in the same, except forward in time. Useful for copying and pasting sets of changes. </p>
+
+        <form>
+            Time Amount (ms): <input type="text" id="ta_addtime_value"> <br/>
+            Timing points input: <br/>
+            <textarea id="ta_addtime" rows="10" cols="80"></textarea> <br/>
+            Output: <br/>
+            <textarea id="ta_addtime_res" rows="10" cols="80"></textarea> <br/>
+            <input type="button" value="Do it" onClick="sv_move()">
+        </form>
+<hr/>
+        <h3> <strong>Arbitrary math function for cyclical SV</strong> </h3>
+
+        <h4> Description: </h4>
+
+        <p>
+					This tool is the most powerful, and the hardest to use. Given your function of domain 0->1 and codomain 0.1->10 (osu! limitations)
+					for C cycles that last D milliseconds, start at T and are divided in N parts, get a timing point that
+					maps from the beginning (zero) to the end (one) of each cycle a SV value.
+					If your function returns a value outside of this range it'll be skipped.
+					It is also guaranteed it'll be called only once per division.
+					In addition, SV changes get rounded to the hundredth place and redundant changes are removed.
+				</p>
+
+        <form>
+            <center>
+            <table>
+                <tr> <td>T - Time Start (ms):</td> <td><input type="text" id="tx_effect_start"></td></tr>
+                <tr> <td>D - Time Duration (ms): </td><td><input type="text" id="tx_effect_dur"></td></tr>
+                <tr> <td>N - Divisions per cycle: </td><td><input type="text" value="1" id="tx_effect_divisions_per_cycle"/></td></tr>
+            </table>
+            </center>
+
+            <br/>
+            Function: <br/>
+            <textarea id="ta_effect" rows="10" cols="80">(function(x){ return 1; })</textarea> <br/>
+
+            C - Cycles: <input type="text" value="1" id="tx_effect_cycles"/> <br/> <br/>
+            Output: <br/>
+            <textarea id="ta_effect_output" rows="10" cols="80"></textarea> <br/>
+            <input type="button" value="Do it" onClick="sv_fx()">
+            <div id="lbl_notif"></div>
+        </form>
+
+				<hr/>
+
+				<h3>Inherited points to uninherited points</h3>
+
+				<h4> Description: </h4>
+				<p>Paste your timing data information here, and get as output the SV changes
+			converted to uninherited timing points.</p>
+
+				<form style="text-align:center">
+					Input:<br/>
+					<textarea id="ta_svconvert_input" rows="10" cols="80"></textarea> <br/>
+					Output:<br/>
+					<textarea id="ta_svconvert_output" rows="10" cols="80"></textarea> <br/>
+					<input type="button" value="do it" onClick="sv_convert()">
+				</form>
+
+        <a href="https://soundcloud.com/ama_loli/amane-space-time-amane"> space time </a>
+    </body>
+</html>
