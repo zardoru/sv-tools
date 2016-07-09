@@ -83,7 +83,7 @@ function sv_move()
 	for (var i = 0; i < lines.length; i++)
 	{
 		var tpArray = lines[i].split(",");
-		tpArray[0] = (document.getElementById("ta_addtime_value").value|0) + (tpArray[0]|0);
+		tpArray[0] = parseFloat(document.getElementById("ta_addtime_value").value) + parseFloat(tpArray[0]);
 		out.value += tpArray.join(",");
 		out.value += "\n";
 	}
