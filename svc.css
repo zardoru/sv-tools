@@ -49,3 +49,17 @@ form {
 	padding-left: 10%;
 	text-align: center;
 }
+
+#tl_fx_collection {
+	width: 60%;
+	height: 30%;
+	margin-right: 20%;
+	margin-left: 20%;
+}
+
+#ta_effect {
+	width: 70%;
+	height: 40%;
+	margin-right: 15%;
+	margin-left: 15%;
+}
