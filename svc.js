@@ -21,7 +21,7 @@ function sv_rateappearance() {
 
 // normalize bpm changes
 function sv_normalize_bpm() {
-	var cnts = getElementFloat("tabp");
+	var cnts = document.getElementById("tabp").value;
 	var lines = cnts.split("\n");
 	var bpm = getElementFloat("bpmnorm");
 	var outobj = document.getElementById("tabpout");
@@ -73,7 +73,7 @@ function sv_remove() {
 
 // Move SV changes by some time.
 function sv_move() {
-	var cnts = getElementFloat("ta_addtime");
+	var cnts = document.getElementById("ta_addtime").value;
 	var lines = cnts.split("\n");
 	var out = document.getElementById("ta_addtime_res");
 	var deltaTime = getElementFloat("ta_addtime_value");
